@@ -1,0 +1,7 @@
+{
+  "name": "ph_sensor",
+  "version": "1.0.0",
+  "documentation": "https://github.com/Any-key-Anton/ph-sensor",
+  "description": "pH sensor component for iArduino I2C pH sensors",
+  "requirements": []
+}
