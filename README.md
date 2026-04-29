@@ -44,11 +44,13 @@ external_components:
 
 ```yaml
 external_components:
-  - source: github://username/repository@main
+  - source: github://Any-key-Anton/ph-sensor@main
     components: [ph_sensor]
 ```
 
-## Конфигурация
+Этот метод предпочтителен, так как позволяет легко обновлять компонент при внесении изменений в репозиторий.
+
+#### Полный пример конфигурации
 
 Пример полной конфигурации для `esp32`:
 
@@ -63,9 +65,8 @@ esp32:
     type: arduino
 
 external_components:
-  - source:
-      type: local
-      path: components
+  - source: github://Any-key-Anton/ph-sensor@main
+    components: [ph_sensor]
 
 i2c:
   sda: GPIO21
