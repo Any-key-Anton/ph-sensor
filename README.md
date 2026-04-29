@@ -9,16 +9,16 @@
 ## Структура проекта
 
 ```
-├── components/
-│   └── ph_sensor/          # Основной компонент ESPHome
-│       ├── __init__.py     # Конфигурация и схема компонента
-│       ├── ph_sensor.h     # Заголовочный файл C++
-│       ├── ph_sensor.cpp   # Реализация компонента
-│       └── *.h, *.cpp      # Библиотека iarduino_I2C_pH
-├── lib/                    # Дополнительные библиотеки
-│   └── iarduino_I2C_pH*    # Исходные файлы библиотеки iArduino
+├── ph_sensor/              # Основной компонент ESPHome (в корне репозитория!)
+│   ├── __init__.py         # Конфигурация и схема компонента
+│   ├── ph_sensor.h         # Заголовочный файл C++
+│   ├── ph_sensor.cpp       # Реализация компонента
+│   ├── manifest.json       # Метаданные компонента
+│   └── *.h, *.cpp          # Библиотека iarduino_I2C_pH
 └── README.md               # Этот файл
 ```
+
+**Важно:** Для корректной работы с `external_components` из GitHub, папка компонента `ph_sensor/` должна находиться в **корне репозитория**, а не в подпапке `components/`.
 
 ## Требования
 
@@ -30,14 +30,15 @@
 
 ### Вариант 1: Локальная установка
 
-1. Скопируйте папку `components/ph_sensor` в корень вашего проекта ESPHome
+1. Скопируйте папку `ph_sensor` в корень вашего проекта ESPHome
 2. Добавьте внешние компоненты в конфигурацию:
 
 ```yaml
 external_components:
   - source:
       type: local
-      path: components
+      path: .
+    components: [ ph_sensor ]
 ```
 
 ### Вариант 2: Установка из Git-репозитория
@@ -45,10 +46,12 @@ external_components:
 ```yaml
 external_components:
   - source: github://Any-key-Anton/ph-sensor@main
-    components: [ph_sensor]
+    components: [ ph_sensor ]
 ```
 
 Этот метод предпочтителен, так как позволяет легко обновлять компонент при внесении изменений в репозиторий.
+
+**Важно:** Убедитесь, что в вашем репозитории папка `ph_sensor/` находится в корне (не в `components/ph_sensor/`).
 
 #### Полный пример конфигурации
 
@@ -66,7 +69,7 @@ esp32:
 
 external_components:
   - source: github://Any-key-Anton/ph-sensor@main
-    components: [ph_sensor]
+    components: [ ph_sensor ]
 
 i2c:
   sda: GPIO21
