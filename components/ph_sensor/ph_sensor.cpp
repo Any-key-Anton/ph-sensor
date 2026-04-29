@@ -27,12 +27,11 @@ void PH_Sensor::dump_config() {
 void PH_Sensor::update() {
   float ph_value = this->ph_.getPH();
   if (ph_value > 0 && ph_value <= 14.0f) {
-    if (this->sensor_ != nullptr) {
-      this->sensor_->publish_state(ph_value);
-    }
+    this->publish_state(ph_value);
     ESP_LOGD(TAG, "Got pH: %.3f", ph_value);
   } else {
     ESP_LOGW(TAG, "Invalid pH reading: %.3f", ph_value);
+    this->publish_state(NAN);
   }
 }
 

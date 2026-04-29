@@ -22,7 +22,7 @@
 
 ## Требования
 
-- **ESPHome** версии 2022.10.0 или выше
+- **ESPHome** версии 2024.1.0 или выше (рекомендуется 2026.4.3+)
 - Устройство с поддержкой **I2C** (ESP32, ESP8266 и др.)
 - Датчик pH с интерфейсом I2C (совместимый с iArduino)
 
@@ -55,8 +55,12 @@ external_components:
 ```yaml
 esphome:
   name: ph-sensor-device
-  platform: ESP32
+  friendly_name: pH Sensor Device
+
+esp32:
   board: esp32dev
+  framework:
+    type: arduino
 
 external_components:
   - source:
@@ -68,14 +72,15 @@ i2c:
   scl: GPIO22
   scan: true
 
-ph_sensor:
-  name: "pH Level"
-  address: 0x00
-  update_interval: 60s
-  accuracy_decimals: 3
-  icon: "mdi:ph"
-  device_class: "ph"
-  state_class: "measurement"
+sensor:
+  - platform: ph_sensor
+    name: "pH Level"
+    address: 0x00
+    update_interval: 60s
+    accuracy_decimals: 2
+    icon: "mdi:ph"
+    device_class: "ph"
+    state_class: "measurement"
 ```
 
 ### Параметры конфигурации
@@ -83,12 +88,14 @@ ph_sensor:
 | Параметр | Описание | По умолчанию | Обязательный |
 |----------|----------|--------------|--------------|
 | `name` | Название сенсора в Home Assistant | — | ✅ Да |
-| `address` | I2C адрес устройства | `0x00` | ❌ Нет |
+| `address` | I2C адрес устройства | `0x00` (автоопределение) | ❌ Нет |
 | `update_interval` | Интервал обновления данных | `60s` | ❌ Нет |
-| `accuracy_decimals` | Количество знаков после запятой | `3` | ❌ Нет |
+| `accuracy_decimals` | Количество знаков после запятой | `2` | ❌ Нет |
 | `icon` | Иконка для Home Assistant | `mdi:ph` | ❌ Нет |
 | `device_class` | Класс устройства | `ph` | ❌ Нет |
 | `state_class` | Класс состояния | `measurement` | ❌ Нет |
+
+Все стандартные параметры сенсора ESPHome также поддерживаются (filters, unit_of_measurement, и т.д.).
 
 ## Подключение оборудования
 
